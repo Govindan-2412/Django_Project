@@ -1,23 +1,35 @@
-# -*- coding: utf-8 -*-
-#
-# Copyright (C) 2012-2019 Vinay Sajip.
-# Licensed to the Python Software Foundation under a contributor agreement.
-# See LICENSE.txt and CONTRIBUTORS.txt.
-#
-import logging
+"""
+HTML parsing library based on the `WHATWG HTML specification
+<https://whatwg.org/html>`_. The parser is designed to be compatible with
+existing HTML found in the wild and implements well-defined error recovery that
+is largely compatible with modern desktop web browsers.
 
-__version__ = '0.3.0'
+Example usage::
 
-class DistlibException(Exception):
-    pass
+    from pip._vendor import html5lib
+    with open("my_document.html", "rb") as f:
+        tree = html5lib.parse(f)
 
-try:
-    from logging import NullHandler
-except ImportError: # pragma: no cover
-    class NullHandler(logging.Handler):
-        def handle(self, record): pass
-        def emit(self, record): pass
-        def createLock(self): self.lock = None
+For convenience, this module re-exports the following names:
 
-logger = logging.getLogger(__name__)
-logger.addHandler(NullHandler())
+* :func:`~.html5parser.parse`
+* :func:`~.html5parser.parseFragment`
+* :class:`~.html5parser.HTMLParser`
+* :func:`~.treebuilders.getTreeBuilder`
+* :func:`~.treewalkers.getTreeWalker`
+* :func:`~.serializer.serialize`
+"""
+
+from __future__ import absolute_import, division, unicode_literals
+
+from .html5parser import HTMLParser, parse, parseFragment
+from .treebuilders import getTreeBuilder
+from .treewalkers import getTreeWalker
+from .serializer import serialize
+
+__all__ = ["HTMLParser", "parse", "parseFragment", "getTreeBuilder",
+           "getTreeWalker", "serialize"]
+
+# this has to be at the top level, see how setup.py parses this
+#: Distribution version number.
+__version__ = "1.0.1"
