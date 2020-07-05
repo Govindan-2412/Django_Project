@@ -1,1 +1,4 @@
-__version__ = "3.2.10"
+from .config import AppConfig
+from .registry import apps
+
+__all__ = ['AppConfig', 'apps']
